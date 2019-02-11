@@ -77,8 +77,28 @@ public class ClockDisplay
      * Update the internal string that represents the display.
      */
     private void updateDisplay()
-    {
-        displayString = hours.getDisplayValue() + ":" + 
-                        minutes.getDisplayValue();
+    {   
+        if(hours.getValue() <= 11)
+        {
+            if(hours.getValue() == 0)
+            {
+                displayString = "12" + ":" +  minutes.getDisplayValue() + " AM";
+            }
+            else
+            {
+                displayString = hours.getDisplayValue() + ":" +  minutes.getDisplayValue() + " AM";
+            }
+        }
+        else
+        {
+            if(hours.getValue() == 12)
+            {
+                displayString = "12" + ":" +  minutes.getDisplayValue() + " PM";
+            }
+            else
+            {
+                displayString = (hours.getValue() - 12) + ":" +  minutes.getDisplayValue() + " PM";
+            }
+        }
     }
 }

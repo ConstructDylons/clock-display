@@ -17,14 +17,14 @@ public class ClockDisplay12Hr
     private NumberDisplay hours;
     private NumberDisplay minutes;
     private String displayString;    // simulates the actual display
-
+    private boolean pm;
     /**
      * Constructor for ClockDisplay objects. This constructor
      * creates a new clock set at 00:00.
      */
-    public ClockDisplay()
+    public ClockDisplay12Hr()
     {
-        hours = new NumberDisplay(24);
+        hours = new NumberDisplay(13);
         minutes = new NumberDisplay(60);
         updateDisplay();
     }
@@ -34,9 +34,9 @@ public class ClockDisplay12Hr
      * creates a new clock set at the time specified by the
      * parameters.
      */
-    public ClockDisplay(int hour, int minute)
+    public ClockDisplay12Hr(int hour, int minute)
     {
-        hours = new NumberDisplay(24);
+        hours = new NumberDisplay(13);
         minutes = new NumberDisplay(60);
         setTime(hour, minute);
     }
@@ -49,6 +49,21 @@ public class ClockDisplay12Hr
     {
         minutes.increment();
         if(minutes.getValue() == 0) {  // it just rolled over!
+            hours.increment();
+            if(hours.getValue() == 12)
+            {
+                if(pm)
+                {
+                    pm = false;
+                }
+                else
+                {
+                    pm = true;
+                }
+            }
+        }
+        if(hours.getValue() == 0)
+        {
             hours.increment();
         }
         updateDisplay();
@@ -77,8 +92,14 @@ public class ClockDisplay12Hr
      * Update the internal string that represents the display.
      */
     private void updateDisplay()
-    {
-        displayString = hours.getDisplayValue() + ":" +
-                        minutes.getDisplayValue();
+    {   
+        if(pm)
+        {
+            displayString = hours.getDisplayValue() + ":" + minutes.getDisplayValue() + " PM";
+        }
+        else
+        {
+            displayString = hours.getDisplayValue() + ":" + minutes.getDisplayValue() + " AM";
+        }
     }
 }
